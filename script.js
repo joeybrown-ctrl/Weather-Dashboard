@@ -19,7 +19,7 @@ $(document).ready(function () {
         let temp = (response.main.temp - 273.15) * 1.80 + 32;
         $("#temp").html("Temperature " + temp.toFixed(2) + " &#176; F");
 
-        let uvQuery = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon
+        let uvQuery = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon
 
         console.log(uvQuery)
 
@@ -32,7 +32,7 @@ $(document).ready(function () {
             $("#uv").text("UV Index: " + uv.value);
         })
 
-        let forecastQuery = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey;
+        let forecastQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey;
 
         console.log(forecastQuery);
 
