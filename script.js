@@ -1,4 +1,78 @@
+$(document).ready(function () {
+    //console.log("document ready");
 
+    let location = "Tucson";
+    let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
+    let queryURl = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey;
+
+
+    $.ajax({
+        url: queryURl,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+
+        $("#city").text(response.name);
+        $("#wind").text("Wind Speed: " + response.wind.speed + " km/h");
+        $("#humidity").text("Humidity: " + response.main.humidity + "%");
+
+        let temp = (response.main.temp - 273.15) * 1.80 + 32;
+        $("#temp").html("Temperature " + temp.toFixed(2) + " &#176;");
+
+        let uvQuery = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon
+
+        console.log(uvQuery)
+
+        $.ajax({
+            url: uvQuery,
+            method: "GET"
+        }).then(function (uv) {
+            console.log(uv);
+
+            $("#uv").text("UV Index: " + uv.value);
+        })
+
+        let forecastQuery = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey;
+
+        console.log(forecastQuery);
+
+        $.ajax({
+            url: forecastQuery,
+            method: "GET"
+        }).then(function (forecast) {
+            
+            console.log(forecast);
+
+            let list = forecast.list
+
+            for (let i = 7; i < list.length; i + 8) {
+
+            }
+
+            //write in date, humidity, icon
+            // let title = $("<h6>").addClass("card-text").text("Temp: " + forecast.list[0].main.temp_max)
+            // let p1 = $("<p>").addClass("card-text").text("Date: " + forecast.list[0].main.temp_max)
+            // let p2 = $("<p>").addClass("card-text").text("Humidity: " + forecast.list[0].main.temp_max)
+
+            // let img = $("<img>").addClass("card-text").text( + forecast.list[0].main.temp_max)
+
+            // col.append(card.append(body.append(title, img, p1, p2)));
+
+
+        })
+
+        //let searchEl = $("<input>").addClass("input-group-text")
+
+    })
+
+
+
+
+
+
+
+
+})
 
 
 
