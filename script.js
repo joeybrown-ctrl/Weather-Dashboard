@@ -17,7 +17,7 @@ $(document).ready(function () {
         $("#humidity").text("Humidity: " + response.main.humidity + "%");
 
         let temp = (response.main.temp - 273.15) * 1.80 + 32;
-        $("#temp").html("Temperature " + temp.toFixed(2) + " &#176;");
+        $("#temp").html("Temperature " + temp.toFixed(2) + " &#176; F");
 
         let uvQuery = "http://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon
 
@@ -40,7 +40,7 @@ $(document).ready(function () {
             url: forecastQuery,
             method: "GET"
         }).then(function (forecast) {
-            
+
             console.log(forecast);
 
             let list = forecast.list
