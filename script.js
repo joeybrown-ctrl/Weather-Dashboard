@@ -54,7 +54,8 @@ $(document).ready(function () {
 
                                     $(".humidity").text(list[i].main.humidity);
                                     $(".date").text(list[i].dt_txt);
-                                    $(".temp").text(list[i].main.temp)
+                                    $(".temp").text(list[i].main.temp);
+                                    $(".icon").text(list[i].weather.icon);
                                     
                                 }
 
