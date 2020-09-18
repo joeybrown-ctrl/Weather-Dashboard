@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    //console.log("document ready");
 
+    //global variables
     let location = "Tucson";
     let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
     let queryURl = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey;
 
-
+    //first ajax call
     $.ajax({
         url: queryURl,
         method: "GET"
@@ -19,10 +19,12 @@ $(document).ready(function () {
         let temp = (response.main.temp - 273.15) * 1.80 + 32;
         $("#temp").html("Temperature " + temp.toFixed(2) + " &#176; F");
 
+        //query for UV index
         let uvQuery = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon
 
         console.log(uvQuery)
 
+        //ajax call for UV index
         $.ajax({
             url: uvQuery,
             method: "GET"
@@ -30,38 +32,54 @@ $(document).ready(function () {
             console.log(uv);
 
             $("#uv").text("UV Index: " + uv.value);
+
+            //query for five-day-forecast
+            let forecastQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey;
+
+            console.log(forecastQuery);
+            //ajax call for five-day-forecast
+            $.ajax({
+                url: forecastQuery,
+                method: "GET"
+            }).then(function (forecast) {
+
+                console.log(forecast);
+
+                let list = forecast.list
+
+                console.log(list);
+
+                for (let i = 7; i < list.length; i+= 8) {
+
+                    $(".humidity").text(list[i].main.humidity);
+                    $(".date").text(list[i].dt_txt);
+                    let img = $("<img src=''>").addClass("card-text")
+                }
+
+                
+
+                //write in date, humidity, icon
+                // let title = $("<h6>").addClass("card-text").text("Temp: " + forecast.list[0].main.temp_max)
+                // let p1 = $("<p>").addClass("card-text").text("Date: " + forecast.list[0].main.temp_max)
+                // let p2 = $("<p>").addClass("card-text").text("Humidity: " + forecast.list[0].main.temp_max)
+
+                // 
+
+                // col.append(card.append(body.append(title, img, p1, p2)));
+
+
+            })
         })
-
-        let forecastQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey;
-
-        console.log(forecastQuery);
-
-        $.ajax({
-            url: forecastQuery,
-            method: "GET"
-        }).then(function (forecast) {
-
-            console.log(forecast);
-
-            let list = forecast.list
-
-            for (let i = 7; i < list.length; i + 8) {
-
-            }
-
-            //write in date, humidity, icon
-            // let title = $("<h6>").addClass("card-text").text("Temp: " + forecast.list[0].main.temp_max)
-            // let p1 = $("<p>").addClass("card-text").text("Date: " + forecast.list[0].main.temp_max)
-            // let p2 = $("<p>").addClass("card-text").text("Humidity: " + forecast.list[0].main.temp_max)
-
-            // let img = $("<img>").addClass("card-text").text( + forecast.list[0].main.temp_max)
-
-            // col.append(card.append(body.append(title, img, p1, p2)));
-
-
-        })
-
-        //let searchEl = $("<input>").addClass("input-group-text")
+        //create search element
+        let searchEl = $("#search")
+        //add bootstrap classes to button using addClass()
+        let searchBtn = $("<button>")
+        searchEl.append(searchBtn);
+        //create click event for search button
+        searchBtn.on("click", function(){
+            //add search input to local storage
+            //localStorage.setItem(time, input.val())
+        });
 
     })
 

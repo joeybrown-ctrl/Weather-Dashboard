@@ -14,32 +14,46 @@
     <nav class="navbar navbar-light bg-success justify-content-center" style="padding: 25px; color: white;">WEATHER
         DASHBOARD</nav>
     <div class="container-fluid">
-        <div class="card" style="margin: 10px;" style="width: 18rem;">
-            <div class="card-body">
-                <h2 class="card-title" id="city"></h2>
-                <h5 class="card-subtitle mb-2 text-muted" id="temp"></h5>
-                <h5 class="card-subtitle mb-2 text-muted" id="humidity"></h5>
-                <h5 class="card-subtitle mb-2 text-muted" id="wind"></h5>
-                <h5 class="card-subtitle mb-2 text-muted" id="uv"></h5>
+
+        <div class="row justify-content-center">
 
 
-            </div>
-
-            <div class="card" style="margin: 10px;" style="width: 18rem;">
-                <!-- <div class="card-body temp icon date humidity"></div>
-                <div class="card-body temp icon date humidity"></div>
-                <div class="card-body temp icon date humidity"></div>
-                <div class="card-body temp icon date humidity"></div>
-                <div class="card-body temp icon date humidity"></div> -->
-            </div>
             <div class="input-group flex-nowrap">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="addon-wrapping"></span>
-                </div>
-                <input type="text" class="form-control" placeholder="Search City" aria-label="Username"
-                    aria-describedby="addon-wrapping">
+                <input id="search" type="text" class="form-control" placeholder="Search City" aria-label="Username"
+                    aria-describedby="addon-wrapping" style="margin: 10px;">
             </div>
         </div>
+        <div class="row justify-content-center">
+            <!-- <div class="col-lg-8 align-items-center"> -->
+            <div class="col text-center">
+                <div class="card" style="margin: 10px;" style="width: 18rem;">
+                    <div class="card-body">
+                        <h2 class="card-title" id="city"></h2>
+                        <h5 class="card-subtitle mb-2 text-muted" id="temp"></h5>
+                        <h5 class="card-subtitle mb-2 text-muted" id="humidity"></h5>
+                        <h5 class="card-subtitle mb-2 text-muted" id="wind"></h5>
+                        <h5 class="card-subtitle mb-2 text-muted" id="uv"></h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col text-center">
+                <div class="card" style="margin: 10px;" style="width: 18rem;">
+
+                    <div class="card-body temp icon date humidity"></div>
+                    <div class="card-body temp date humidity"></div>
+                    <div class="card-body temp date humidity"></div>
+                    <div class="card-body temp date humidity"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     </div>
 
