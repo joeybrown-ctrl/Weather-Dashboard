@@ -5,7 +5,7 @@ $(document).ready(function () {
 
         let location = $("#searchInput").val();
         let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
-        let queryURl = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey;
+        let queryURl = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey + "&units=imperial";
 
         if (location !== "") {
 
@@ -17,14 +17,13 @@ $(document).ready(function () {
                         console.log(response);
 
                         $("#city").text(response.name);
+                        $("#temp").html("Temperature " + response.main.temp + " &#176; F");
                         $("#wind").text("Wind Speed: " + response.wind.speed + " km/h");
                         $("#humidity").text("Humidity: " + response.main.humidity + "%");
-
-                        let temp = (response.main.temp - 273.15) * 1.80 + 32;
-                        $("#temp").html("Temperature " + temp.toFixed(2) + " &#176; F");
+                        
 
                         //query for UV index
-                        let uvQuery = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon
+                        let uvQuery = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + response.coord.lat + "&lon=" + response.coord.lon + "&units=imperial"
 
                         console.log(uvQuery)
 
@@ -38,7 +37,7 @@ $(document).ready(function () {
                             $("#uv").text("UV Index: " + uv.value);
 
                             //query for five-day-forecast
-                            let forecastQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey;
+                            let forecastQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey + "&units=imperial";
 
                             console.log(forecastQuery);
                             //ajax call for five-day-forecast
@@ -46,17 +45,16 @@ $(document).ready(function () {
                                 url: forecastQuery,
                                 method: "GET"
                             }).then(function (forecast) {
-
                                 console.log(forecast);
 
                                 let list = forecast.list
-
                                 console.log(list);
 
                                 for (let i = 7; i < list.length; i += 8) {
 
                                     $(".humidity").text(list[i].main.humidity);
                                     $(".date").text(list[i].dt_txt);
+                                    $(".temp").text(list[i].main.temp)
                                     
                                 }
 
