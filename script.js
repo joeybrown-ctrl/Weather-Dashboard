@@ -1,16 +1,12 @@
 $(document).ready(function () {
 
-
     let locationArr = localStorage.getItem("locations");
     if (locationArr === null) {
         locationArr = [];
     } else {
         locationArr = JSON.parse(locationArr);
     }
-    //search history click event + add to list group using jQuery
-    //loop through locationArr, make each an <li>, make an event searching based on class/text within <li>s , using this.text(), append to front end
-    //first get this working, then make a function that utilizes the code in the ajax calls and wrap everything in that to make the code dry
-
+    
     function displaySearches(){
 
         let sHistory = $("#searchHistory")
@@ -21,7 +17,12 @@ $(document).ready(function () {
 
         let sCity = $("<li>").text(locationArr[i]);
         sCity.addClass("list-group-item");
-        sHistory.append(sCity);
+        sHistory.prepend(sCity);
+
+        // $(sCity).on("click", function (event){
+        //     event.preventDefault();
+
+        // })
 
     }
 
@@ -32,16 +33,14 @@ $(document).ready(function () {
 
     $(document).on("click", ".list-group-item", function (){
 
-        //console.log("hello");
         let content = $(this).text()
         console.log(content);
 
-        //add in ajax call 
     })
 
     //search click event
     $("#searchBtn").click(function () {
-
+        
         let location = $("#searchInput").val();
         locationArr.push(location);
         let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
@@ -94,17 +93,20 @@ $(document).ready(function () {
                                 for (let i = 7; i < list.length; i += 8) {
                                     
                                     //repeats five times
-                                    let newDiv = $("<div>");
-                                    let humidDiv = $("<h3>").text(list[i].main.humidity);
-                                    let dateDiv = $("<h3>").text(list[i].dt_txt);
-                                    let tempDiv = $("<h3>").text(list[i].main.temp);
+                                    let colDiv = $("<div class='col text-center align-items-center'>")
+                                    let newDiv = $("<div class='card text-white bg-success card-group' style='max-width: 10rem; margins: 5px; padding: 5px;'>");
+                                    let dateDiv = $("<h4 class='card-title'>").text(list[i].dt_txt.split(" ")[0]);
+                                    let humidDiv = $("<p class='card-subtitle'>").text("Humidity: " + list[i].main.humidity + " %");
+                                    let tempDiv = $("<p class='card-subtitle'>").html("Temp: " + list[i].main.temp + " &#176; F");
                                     let img = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + list[i].weather[0].icon + "@2x.png");
-                                    newDiv.append(img);
+                                    
                                     newDiv.append(dateDiv);
                                     newDiv.append(tempDiv);
                                     newDiv.append(humidDiv);
+                                    newDiv.append(img);
+                                    colDiv.append(newDiv);
 
-                                    $("#forecast-list").append(newDiv);
+                                    $("#forecast-list").append(colDiv);
                                     
                                 }
 
@@ -139,7 +141,7 @@ $(document).ready(function () {
 })
 
 
-
+//make a function that utilizes the code in the ajax calls and wrap everything in that to make the code dry
 
 // # 06 Server-Side APIs: Weather Dashboard
 
