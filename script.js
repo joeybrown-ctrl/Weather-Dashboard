@@ -1,9 +1,49 @@
 $(document).ready(function () {
-    
+
+
+    let locationArr = localStorage.getItem("locations");
+    if (locationArr === null) {
+        locationArr = [];
+    } else {
+        locationArr = JSON.parse(locationArr);
+    }
+    //search history click event + add to list group using jQuery
+    //loop through locationArr, make each an <li>, make an event searching based on class/text within <li>s , using this.text(), append to front end
+    //first get this working, then make a function that utilizes the code in the ajax calls and wrap everything in that to make the code dry
+
+    function displaySearches(){
+
+        let sHistory = $("#searchHistory")
+        sHistory.empty();
+   
+
+    for (let i = 0; i < locationArr.length; i++) {
+
+        let sCity = $("<li>").text(locationArr[i]);
+        sCity.addClass("list-group-item");
+        sHistory.append(sCity);
+
+    }
+
+}
+
+    displaySearches();
+
+
+    $(document).on("click", ".list-group-item", function (){
+
+        //console.log("hello");
+        let content = $(this).text()
+        console.log(content);
+
+        //add in ajax call 
+    })
+
     //search click event
     $("#searchBtn").click(function () {
 
         let location = $("#searchInput").val();
+        locationArr.push(location);
         let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
         let queryURl = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey + "&units=imperial";
 
@@ -18,7 +58,7 @@ $(document).ready(function () {
 
                         $("#city").text(response.name);
                         $("#temp").html("Temperature " + response.main.temp + " &#176; F");
-                        $("#wind").text("Wind Speed: " + response.wind.speed + " km/h");
+                        $("#wind").text("Wind Speed: " + response.wind.speed + " mph");
                         $("#humidity").text("Humidity: " + response.main.humidity + "%");
                         
 
@@ -50,16 +90,29 @@ $(document).ready(function () {
                                 let list = forecast.list
                                 console.log(list);
 
+                                //for loop iterating through the list array
                                 for (let i = 7; i < list.length; i += 8) {
+                                    
+                                    //repeats five times
+                                    let newDiv = $("<div>");
+                                    let humidDiv = $("<h3>").text(list[i].main.humidity);
+                                    let dateDiv = $("<h3>").text(list[i].dt_txt);
+                                    let tempDiv = $("<h3>").text(list[i].main.temp);
+                                    let img = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + list[i].weather[0].icon + "@2x.png");
+                                    newDiv.append(img);
+                                    newDiv.append(dateDiv);
+                                    newDiv.append(tempDiv);
+                                    newDiv.append(humidDiv);
 
-                                    $(".humidity").text(list[i].main.humidity);
-                                    $(".date").text(list[i].dt_txt);
-                                    $(".temp").text(list[i].main.temp);
-                                    $(".icon").text(list[i].weather.icon);
+                                    $("#forecast-list").append(newDiv);
                                     
                                 }
 
-                                localStorage.setItem("location", location);
+                                console.log(locationArr);
+                                localStorage.setItem("locations", JSON.stringify(locationArr));
+
+                                displaySearches()
+                                
 
                             })
 
