@@ -11,28 +11,31 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-success justify-content-center" style="padding: 25px; color: white;">WEATHER
-        DASHBOARD</nav>
+    <nav class="navbar navbar-light bg-success justify-content-center" style="padding: 25px; color: white;">
+        <h4 class="display-4">Weather Dashboard</h4>
+    </nav>
+
     <div class="container-fluid">
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-start">
+            <div class="col-md-3">
+                <div class="card" style="width: 18rem; margin: 10px;">
 
+                    <div class="card-header">
+                        <div class="input-group flex-nowrap">
+                            <input id="searchInput" type="text" class="form-control" placeholder="Search City"
+                                aria-label="Username" aria-describedby="addon-wrapping" style="margin: 10px;">
+                            <button id="searchBtn" type="button" style="margin: 10px;"
+                                class="btn btn-success">Search</button>
+                        </div>
+                    </div>
+                    <ul id="searchHistory" class="list-group">
+                    </ul>
 
-            <div class="input-group flex-nowrap">
-                <input id="searchInput" type="text" class="form-control" placeholder="Search City" aria-label="Username"
-                    aria-describedby="addon-wrapping" style="margin: 10px;">
-                    <button id="searchBtn" type="button" style="margin: 10px;" class="btn btn-success">Search</button>
+                </div>
             </div>
-            <ul id="searchHistory" class="list-group">
-                <!-- <li id="" class="list-group-item"></li>
-                <li id="" class="list-group-item"></li>
-                <li id="" class="list-group-item"></li>
-                <li id="" class="list-group-item"></li>
-                <li id="" class="list-group-item"></li> -->
-            </ul>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col text-center">
+
+            <div class="col-md-9 text-center">
                 <div class="card" style="margin: 10px;" style="width: 18rem;">
                     <div class="card-body">
                         <h2 class="card-title" id="city"></h2>
@@ -42,23 +45,14 @@
                         <h5 class="card-subtitle mb-2 text-muted" id="uv"></h5>
                     </div>
                 </div>
-            </div>
 
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col text-center">
                 <div id="forecast-list" class="card" style="margin: 10px;" style="width: 18rem;">
-
-                    <!-- <div class="card-body date"></div>
-                    <div class="card-body temp"></div>
-                    <div class="card-body humidity"></div> -->
-                    <!-- <img src="" alt="weather icon" class="card-body icon"> -->
-                    
                 </div>
+
+
             </div>
+
         </div>
-    </div>
 
 
 
