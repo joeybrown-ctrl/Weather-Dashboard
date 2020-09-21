@@ -19,10 +19,27 @@ $(document).ready(function () {
         sCity.addClass("list-group-item");
         sHistory.prepend(sCity);
 
-        // $(sCity).on("click", function (event){
-        //     event.preventDefault();
+        
 
-        // })
+        $(sCity).on("click", function (event){
+            event.preventDefault();
+
+
+            // let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
+            // let searchQuery = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey + "&units=imperial";
+
+            // $.ajax({
+            //     url: searchQuery,
+            //     method: "GET"
+            // }).then(function(sResponse){
+
+            //     $("#city").text(sResponse.name);
+            //     $("#temp").html("Temperature " + sResponse.main.temp + " &#176; F");
+            //     $("#wind").text("Wind Speed: " + sResponse.wind.speed + " mph");
+            //     $("#humidity").text("Humidity: " + sResponse.main.humidity + "%");
+            // })
+
+        })
 
     }
 
@@ -75,6 +92,18 @@ $(document).ready(function () {
 
                             $("#uv").text("UV Index: " + uv.value);
 
+                            // if(uv.value <= "2") {
+                            //     $(uv.value).addClass(".text-light bg-success")
+                            // } else if(uv.value > "3" && uv.value < "5") {
+                            //     $(uv.value).addClass(".text-dark bg-warning")
+                            // } else if(uv.value > "5" && uv.value < "7") {
+                            //     $(uv.value).addClass(".text-light bg-orange")
+                            // } else if(uv.value > "7" && uv.value < "10") {
+                            //     $(uv.value).addClass(".text-light bg-danger")
+                            // } else if(uv.value > "11") {
+                            //     $(uv.value).addClass(".text-light bg-violet")
+                            // }
+
                             //query for five-day-forecast
                             let forecastQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey + "&units=imperial";
 
@@ -93,18 +122,17 @@ $(document).ready(function () {
                                 for (let i = 7; i < list.length; i += 8) {
                                     
                                     //repeats five times
-                                    let colDiv = $("<div class='col text-center align-items-center'>")
-                                    let newDiv = $("<div class='card text-white bg-success card-group' style='max-width: 10rem; margins: 5px; padding: 5px;'>");
+                                    let colDiv = $("<div class='col text-center align-items-center'>");
                                     let dateDiv = $("<h4 class='card-title'>").text(list[i].dt_txt.split(" ")[0]);
                                     let humidDiv = $("<p class='card-subtitle'>").text("Humidity: " + list[i].main.humidity + " %");
                                     let tempDiv = $("<p class='card-subtitle'>").html("Temp: " + list[i].main.temp + " &#176; F");
                                     let img = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + list[i].weather[0].icon + "@2x.png");
+
+                                    colDiv.append(dateDiv);
+                                    colDiv.append(tempDiv);
+                                    colDiv.append(humidDiv);
+                                    colDiv.append(img);
                                     
-                                    newDiv.append(dateDiv);
-                                    newDiv.append(tempDiv);
-                                    newDiv.append(humidDiv);
-                                    newDiv.append(img);
-                                    colDiv.append(newDiv);
 
                                     $("#forecast-list").append(colDiv);
                                     
@@ -134,7 +162,15 @@ $(document).ready(function () {
 
         });
 
+        //TO DO
 
+        // WHEN I view the UV index
+        // THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+
+        // WHEN I click on a city in the search history
+        // THEN I am again presented with current and future conditions for that city
+        // WHEN I open the weather dashboard
+        // THEN I am presented with the last searched city forecast
 
 
 
