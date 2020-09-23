@@ -21,25 +21,11 @@ $(document).ready(function () {
 
         
 
-        $(sCity).on("click", function (event){
-            event.preventDefault();
+        
 
 
-            // let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
-            // let searchQuery = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey + "&units=imperial";
 
-            // $.ajax({
-            //     url: searchQuery,
-            //     method: "GET"
-            // }).then(function(sResponse){
-
-            //     $("#city").text(sResponse.name);
-            //     $("#temp").html("Temperature " + sResponse.main.temp + " &#176; F");
-            //     $("#wind").text("Wind Speed: " + sResponse.wind.speed + " mph");
-            //     $("#humidity").text("Humidity: " + sResponse.main.humidity + "%");
-            // })
-
-        })
+        
 
     }
 
@@ -50,9 +36,57 @@ $(document).ready(function () {
 
     $(document).on("click", ".list-group-item", function (){
 
-        let content = $(this).text()
-        console.log(content);
+            let location = $(this).text()
+            let apiKey = "ad17440b66c552dbcec2d851d01b43a3";
+            let searchQuery = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey + "&units=imperial";
 
+            $.ajax({
+                url: searchQuery,
+                method: "GET"
+            }).then(function(sResponse){
+
+                $("#city").text(sResponse.name);
+                $("#temp").html("Temperature " + sResponse.main.temp + " &#176; F");
+                $("#wind").text("Wind Speed: " + sResponse.wind.speed + " mph");
+                $("#humidity").text("Humidity: " + sResponse.main.humidity + "%");
+            })
+
+            let fiveDayQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + apiKey + "&units=imperial";
+
+            console.log(fiveDayQuery);
+            //ajax call for five-day-forecast
+            $.ajax({
+                url: fiveDayQuery,
+                method: "GET"
+            }).then(function (five) {
+                console.log(five);
+
+                let list = five.list
+                console.log(list);
+
+                $("#forecast-list").empty()
+
+                //for loop iterating through the list array
+                for (let i = 0; i < list.length; i += 8) {
+                    
+                    //repeats five times
+                    let colDiv = $("<div class='col text-center align-items-center'>");
+                    let dateDiv = $("<h4 class='card-title'>").text(list[i].dt_txt.split(" ")[0]);
+                    let humidDiv = $("<p class='card-subtitle'>").text("Humidity: " + list[i].main.humidity + " %");
+                    let tempDiv = $("<p class='card-subtitle'>").html("Temp: " + list[i].main.temp + " &#176; F");
+                    let img = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + list[i].weather[0].icon + "@2x.png");
+
+
+                    colDiv.append(dateDiv);
+                    colDiv.append(tempDiv);
+                    colDiv.append(humidDiv);
+                    colDiv.append(img);
+                    
+
+                    $("#forecast-list").append(colDiv);
+                    
+                }
+            })
     })
 
     //search click event
@@ -93,15 +127,15 @@ $(document).ready(function () {
                             $("#uv").text("UV Index: " + uv.value);
 
                             // if(uv.value <= "2") {
-                            //     $(uv.value).addClass(".text-light bg-success")
+                            //     $("#uv").addClass(".text-light bg-success");
                             // } else if(uv.value > "3" && uv.value < "5") {
-                            //     $(uv.value).addClass(".text-dark bg-warning")
+                            //     $("#uv").addClass(".text-dark bg-warning");
                             // } else if(uv.value > "5" && uv.value < "7") {
-                            //     $(uv.value).addClass(".text-light bg-orange")
+                            //     $("#uv").addClass(".text-light bg-warning-dark");
                             // } else if(uv.value > "7" && uv.value < "10") {
-                            //     $(uv.value).addClass(".text-light bg-danger")
+                            //     $("#uv").addClass(".text-light bg-danger");
                             // } else if(uv.value > "11") {
-                            //     $(uv.value).addClass(".text-light bg-violet")
+                            //     $("#uv").addClass(".text-light bg-secondary-dark");
                             // }
 
                             //query for five-day-forecast
@@ -119,7 +153,7 @@ $(document).ready(function () {
                                 console.log(list);
 
                                 //for loop iterating through the list array
-                                for (let i = 7; i < list.length; i += 8) {
+                                for (let i = 0; i < list.length; i += 8) {
                                     
                                     //repeats five times
                                     let colDiv = $("<div class='col text-center align-items-center'>");
@@ -221,4 +255,4 @@ $(document).ready(function () {
 
 // * The URL of the deployed application.
 
-// * The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
+// * The URL of the GitHub repository. Give the reposi
